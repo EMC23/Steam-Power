@@ -12,28 +12,30 @@ export default class Mobs {
   MobContainerArray: Array<any>;
   mobGroup: any;
   SceneMobArray: any;
+  mainScene: any;
 
-  constructor() {
+  constructor(scene) {
     this.jigs = useJigsStore();
+    this.mainScene= scene;
     this.SceneMobHealthBarArray = new Array;
     this.MobContainerArray = new Array;
     this.SceneMobArray = new Array;
   }
 
-  add(self) {
-    this.mobGroup = self.physics.add.group({ allowGravity: false });
+  add() {
+    this.mainScene.mobGroup = this.mainScene.physics.add.group({ allowGravity: false });
     if (typeof this.jigs.mobArray !== 'undefined') {
       let i = 0;
       while (i < this.jigs.mobArray.length) {
-        this.MobContainerArray[i] = self.add.container(parseInt(this.jigs.mobArray[i][2]), parseInt(this.jigs.mobArray[i][3]));
-        this.SceneMobArray[i] = new Mob(self, 0, 0, this.jigs.mobArray[i][4], this.jigs.mobArray[i][1]);
-        self.add.existing(this.SceneMobArray[i]);
-        this.SceneMobHealthBarArray[i] = self.add.image(0, -30, 'healthBar');
+        this.MobContainerArray[i] = this.mainScene.add.container(parseInt(this.jigs.mobArray[i][2]), parseInt(this.jigs.mobArray[i][3]));
+        this.SceneMobArray[i] = new Mob(this.mainScene, this.jigs.mobArray[i]);
+        this.mainScene.add.existing(this.SceneMobArray[i]);
+        this.SceneMobHealthBarArray[i] = this.mainScene.add.image(0, -30, 'healthBar');
         this.SceneMobHealthBarArray[i].displayWidth = 25;
         this.MobContainerArray[i].add(this.SceneMobArray[i]);
         this.MobContainerArray[i].add(this.SceneMobHealthBarArray[i]);
         this.MobContainerArray[i].setDepth(6);
-        this.mobGroup.add(this.MobContainerArray[i], true);
+        this.mainScene.mobGroup.add(this.MobContainerArray[i], true);
         i++;
       }
     }

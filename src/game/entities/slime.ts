@@ -1,27 +1,27 @@
 /**
- * ------- Mob ---------
+ * ------- Slime ---------
  */
 import Phaser from "phaser";
 import { useJigsStore } from '../../stores/jigs';
 
 
-export default class Mob extends Phaser.Physics.Arcade.Sprite {
+export default class Slime extends Phaser.Physics.Arcade.Sprite {
     jigs: any;
 
-    constructor(scene, mob) {
+    constructor(scene,slime, x, y, sprite, name) {
         super(scene, 0, 0, null);
-        scene.add.sprite(mob.x, mob.y);
+        scene.add.sprite(x, y);
         this.jigs = useJigsStore();
-        this.setTexture(mob[5] + '-walk-' + mob[6]);
-        this.play(mob[5] + '-stop-' + mob[6]);
+        this.setTexture('slime-' + slime[1] + '-walk-default');
+        this.play('slime-' + slime[1] + '-walkDown-default');
         this.setInteractive({ cursor: 'url(/assets/images/cursors/attack.cur), pointer' });
         this.setScale(1);
-        this.on('pointerdown', this.onMobDown.bind(this, mob[5]));
-        this.loadMob(mob.x);
+        this.on('pointerdown', this.onSlimeDown.bind(this, name));
+        this.loadSlime(x);
         this.setDepth(9);
     }
 
-    onMobDown(name) {
+    onSlimeDown(name) {
         this.jigs.mobClick = name;
         this.jigs.mobShoot = name;
         this.jigs.playerStats.credits++;
@@ -30,7 +30,7 @@ export default class Mob extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    loadMob(sprite) {
-        console.log('mob added' + sprite);
+    loadSlime(sprite) {
+        console.log('slime added' + sprite);
     }
 }

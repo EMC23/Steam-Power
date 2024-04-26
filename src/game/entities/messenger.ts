@@ -2,11 +2,11 @@
  * ------- Messenger ---------
  */
 export default class Messenger {
-  room: any;
+  //room: any;
   self: any;
 
   initMessages(self) {
-
+/*
     self.room.onMessage("portal", (message) => {
       const promise1 = Promise.resolve(self.jump());
       self.jigs.tiled = message;
@@ -85,6 +85,6 @@ export default class Messenger {
         }
         i++;
       }
-    });
+    }); */
   }
 }

@@ -20,7 +20,7 @@ export default class Switch extends Phaser.Physics.Arcade.Sprite {
       this.play('switchAnim_' + id + "Off");
     } else {
       this.play('switchAnim_' + id + "Off");
-      console.log('yo');
+     
       this.setInteractive({ cursor: 'url(/assets/images/cursors/speak.cur), pointer' });
     }
     this.on('pointerdown', this.onSwitchDown.bind(this, id, scene));

@@ -7,7 +7,6 @@ import { createCharacterAnims } from "../entities/anim";
 
 export default class Reward extends Phaser.Physics.Arcade.Sprite {
     jigs: any;
-    colliderMap: any;
     data: any;
     sprite: any;
     thing: any;

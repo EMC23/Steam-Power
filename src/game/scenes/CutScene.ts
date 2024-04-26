@@ -19,7 +19,6 @@ export class CutScene extends Phaser.Scene {
   }
 
   create() {
-    console.log('blob');
 
     this.jigs.foliosArray.forEach(element => {
       if (element.id == this.jigs.folioClicked) {
@@ -107,8 +106,6 @@ export class CutScene extends Phaser.Scene {
       .on('pointerdown', this.onCutsceneDown.bind(this)); */
   }
 
-
-
   CreatePanel(scene) {
     var sizer = scene.rexUI.add.fixWidthSizer({
       space: {
@@ -170,30 +167,22 @@ export class CutScene extends Phaser.Scene {
         sizer.x += dragX - topLeftController.x;
         sizer.y += dragY - topLeftController.y;
       })
-
     sizer.pin(topLeftController)
-
   }
-
-
 }
 
 var CreateHorizontalScrollBar = function (scene) {
   return scene.rexUI.add.scrollBar({
     width: 400,
     orientation: 'x',
-
     background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 0, COLOR_DARK),
-
     buttons: {
       left: scene.rexUI.add.triangle(0, 0, 20, 20, COLOR_PRIMARY).setDirection('left'),
       right: scene.rexUI.add.triangle(0, 0, 20, 20, COLOR_PRIMARY).setDirection('right'),
     },
-
     slider: {
       thumb: scene.rexUI.add.roundRectangle(0, 0, 40, 20, 10, COLOR_LIGHT),
     },
-
     space: {
       left: 5, right: 5, top: 5, bottom: 5, item: 5
     }
@@ -221,8 +210,3 @@ var CreateVerticalScrollBar = function (scene) {
     }
   })
 }
-
-
-
-
-

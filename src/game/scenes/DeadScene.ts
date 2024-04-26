@@ -20,8 +20,6 @@ export class DeadScene extends Phaser.Scene {
         this.cameras.main.setBackgroundColor(0x000000);
         this.load.image('tesla', '/assets/images/84a42d08-8165-4111-aec7-edd1d0d4900d.png');
         // preload demo assets
-        // this.load.image('ship_0001', 'assets/ship_0001.png');
-        // this.load.image('ship_0001', 'https://cdn.glitch.global/3e033dcd-d5be-4db4-99e8-086ae90969ec/ship_0001.png?v=1649945243288');
     }
 
     create() {

@@ -135,4 +135,28 @@ export default {
 .list-group-item:last-child {
   border-radius: 0;
 }
+
+.row {
+  --cui-gutter-x: 1.5rem;
+  --cui-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--cui-gutter-y));
+  margin-right: calc(-.5 * var(--cui-gutter-x));
+  margin-left: calc(-.5 * var(--cui-gutter-x));
+}
+
+.col {
+  flex: 1 0 0%;
+}
+
+.row > * {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--cui-gutter-x) * .5);
+  padding-left: calc(var(--cui-gutter-x) * .5);
+  margin-top: var(--cui-gutter-y);
+}
+
 </style>

@@ -10,19 +10,21 @@ export default class Gun extends Phaser.Physics.Arcade.Sprite {
   jigs: any;
   angle: any;
   bullets: any;
+  mainScene: any;
 
-  constructor(scene, x, y,sprite) {
-    super(scene, x, y, sprite)
+  constructor(mainScene, x, y,sprite) {
+    super(mainScene, x, y, sprite)
     this.x = x;
     this.y = y;
     this.jigs = useJigsStore();
-    scene.events.on('position', this.handler, this);
+    this.mainScene = mainScene;
+    this.mainScene.events.on('position', this.handler, this);
   }
 
-  shoot(self,event) {
+  shoot(event) {
     this.getAngle(event);
 
-    this.bullets = self.physics.add.group({
+    this.bullets = this.mainScene.physics.add.group({
       classType: Bullet,
       maxSize: 10,
       runChildUpdate: true,

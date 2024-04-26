@@ -1,40 +1,43 @@
 import { Scene } from 'phaser'
 import WebFont from '../../assets/WebFont'
-/* import thudMp3 from '../assets/thud.mp3'
-import thudOgg from '../assets/thud.ogg'
- */
+
+
 export class BootScene extends Scene {
   constructor () {
-    super({ key: 'BootScene', active: true })
+    super({ key: 'BootScene', active: true });
   }
 
   preload () {
-   // this.load.image('bomb', '/assets/images/bomb.png');
-   // this.load.image('sky', '/assets/images/sky.png');
-  /*   this.load.audio('thud', [thudMp3, thudOgg]) */
-    this.load.spritesheet('PsibotF', '/assets/images/sprites/avatars/1000.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('PsibotF_slash', '/assets/images/sprites/avatars/1000.png', { frameWidth: 192, frameHeight: 192 });
-    this.load.spritesheet('PsibotF_walk128', '/assets/images/sprites/avatars/1000.png', { frameWidth: 128, frameHeight: 128 });
-    this.load.spritesheet('PsibotM', '/assets/images/sprites/avatars/4351.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('PsibotM_slash', '/assets/images/sprites/avatars/4351.png', { frameWidth: 192, frameHeight: 192 });
-    this.load.spritesheet('otherPlayer', '/assets/images/sprites/avatars/4351.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.image('ship', '/assets/images/star_gold.png');
-    this.load.image('book', '/assets/images/book.png');
-    this.load.image('star', '/assets/images/star_gold.png');
-    this.load.image('gun', "/assets/images/gun.png");
-    this.load.image('bullet', "/assets/images/star_gold.png");
-    this.load.image('healthBar', "/assets/images/health_bar.png");
-    this.load.image('portal00001', '/assets/images/enemyBlack5.png');
-    this.load.image('portal00002', '/assets/images/enemyBlack5.png');
-    this.load.image('portal00003', '/assets/images/enemyBlack5.png');
-    this.load.image('reward', '/assets/images/various-32-greyout_69.png');
-    this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
-    this.load.addFile(new WebFont(this.load, ['Roboto', 'Neutron Demo']))
-    this.load.image('cursor', '/assets/images/cursors/blank.cur');
-    this.load.image('cursor2', '/assets/images/cursors/attack.cur');
-    this.load.image('cursor3', '/assets/images/cursors/speak.cur');
-    this.load.image('cursor4', '/assets/images/cursors/blank.cur');
-    this.load.image('cursor4', '/assets/images/cursors/point.cur');
+    this.load.spritesheet('player-walk-default', './assets/images/sprites/steam engineer/walk-default.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player-hurt-default', './assets/images/sprites/steam engineer/hurt-default.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player-spell-default', './assets/images/sprites/steam engineer/spell-default.png', { frameWidth: 64, frameHeight: 64 });
+
+    this.load.spritesheet('player-walk-glowsword', './assets/images/sprites/steam engineer/walk-glowsword.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player-slash-oversize-glowsword', './assets/images/sprites/steam engineer/slash-oversize-glowsword.png', { frameWidth: 192, frameHeight: 192 });
+
+    this.load.spritesheet('player-walk-mace', './assets/images/sprites/steam engineer/walk-mace.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player-slash-oversize-mace', './assets/images/sprites/steam engineer/slash-oversize-mace.png', { frameWidth: 192, frameHeight: 192 });
+
+    this.load.spritesheet('player-hurt-rapier', './assets/images/sprites/steam engineer/hurt-rapier.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player-walk-rapier', './assets/images/sprites/steam engineer/walk-rapier.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('player-slash-oversize-rapier', './assets/images/sprites/steam engineer/slash-oversize-rapier.png', { frameWidth: 192, frameHeight: 192 });
+
+    this.load.spritesheet('player-slash-128-hammer', './assets/images/sprites/steam engineer/slash-128-hammer.png', { frameWidth: 128, frameHeight: 128 });
+    this.load.image('book', './assets/images/book.png');
+    this.load.image('star', './assets/images/star_gold.png');
+    this.load.image('gun', "./assets/images/gun.png");
+    this.load.image('bullet', "./assets/images/star_gold.png");
+    this.load.image('healthBar', "./assets/images/health_bar.png");
+    this.load.image('reward', './assets/images/various-32-greyout_69.png');
+   // this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/masterassets/images/arrow-down-left.png');
+   // this.load.addFile(new WebFont(this.load, ['Roboto', 'Neutron Demo']))
+    this.load.image('cursor', './assets/images/cursors/blank.cur');
+    this.load.image('cursor2', './assets/images/cursors/attack.cur');
+    this.load.image('cursor3', './assets/images/cursors/speak.cur');
+    this.load.image('cursor4', './assets/images/cursors/blank.cur');
+    this.load.image('cursor4', './assets/images/cursors/point.cur');
+
+    this.load.audio('spooky', './assets/soundtracks/spooky.mp3');
   }
 
   create () {

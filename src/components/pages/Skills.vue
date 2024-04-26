@@ -125,5 +125,5 @@ export default {
 </script>
 
 <template>
-  <tree-view id="my-tree" :initial-model="dataModel"></tree-view>
+  <tree-view id="my-tree" class="skills" :initial-model="dataModel"></tree-view>
 </template>

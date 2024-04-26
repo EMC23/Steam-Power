@@ -8,86 +8,91 @@ import { useJigsStore } from '../../stores/jigs';
 export default class PlayerMovement {
 
   jigs: any;
-  scene: any;
-
-  constructor(scene) {
-    this.jigs  = useJigsStore();
-    this.scene = scene;
+  mainScene: any;
+  player: any;
+  constructor(mainScene,player) {
+    this.jigs = useJigsStore();
+    this.mainScene = mainScene;
+    this.player = player;
   }
-  move(self, velocity, colliderMap) {
+  move(velocity) {
 
-    if (!self.inputPayload.left && !self.inputPayload.right &&
-      !self.inputPayload.up && !self.inputPayload.down &&
-      self.currentPlayer.speed != 'stopped') {
-      self.currentPlayer.anims.play('stop_' + this.jigs.playerStats.sprite_sheet);
-      self.currentPlayer.speed = 'stopped';
-      self.currentPlayer.dir = 'stopped';
-      self.currentPlayer.setVelocityX(0);
-      self.currentPlayer.setVelocityY(0);
-
-    }
-    if (self.inputPayload.left) {
-      const tile = colliderMap.getTileAtWorldXY(self.currentPlayer.x - 16, self.currentPlayer.y, true);
-      if (tile) {
-        self.currentPlayer.setVelocityX(-velocity);
-      }
-      else {
-        self.currentPlayer.x -= velocity;
-      }
-      if (self.currentPlayer.dir != 'left') {
-        self.currentPlayer.anims.play('walkLeft_' + this.jigs.playerStats.sprite_sheet);
-        self.currentPlayer.dir = 'left';
-        self.currentPlayer.speed = 'go';
-      }
-    }
-    else if (self.inputPayload.right) {
-      const tile = colliderMap.getTileAtWorldXY(self.currentPlayer.x + 16, self.currentPlayer.y, true);
-      if (tile) {
-        self.currentPlayer.setVelocityX(velocity);
-      }
-      else {
-        self.currentPlayer.x += velocity;
-      }
-      if (self.currentPlayer.dir != 'right') {
-        self.currentPlayer.anims.play('walkRight_' + this.jigs.playerStats.sprite_sheet);
-        self.currentPlayer.dir = 'right';
-        self.currentPlayer.speed = 'go';
-      }
-    }
-    else if (self.inputPayload.up) {
-      const tile = colliderMap.getTileAtWorldXY(self.currentPlayer.x, self.currentPlayer.y - 16, true);
-      if (tile) {
-        self.currentPlayer.setVelocityY(-velocity);
-      }
-      else {
-        self.currentPlayer.y -= velocity;
-      }
-      if (self.currentPlayer.dir != 'up') {
-        self.currentPlayer.anims.play('walkUp_' + this.jigs.playerStats.sprite_sheet);
-        self.currentPlayer.dir = 'up';
-        self.currentPlayer.speed = 'go';
-      }
-    }
-    else if (self.inputPayload.down) {
-      const tile = colliderMap.getTileAtWorldXY(self.currentPlayer.x, self.currentPlayer.y + 16, true);
-      if (tile) {
-        self.currentPlayer.setVelocityY(velocity);
-      }
-      else {
-        self.currentPlayer.y += velocity;
-      }
-      if (self.currentPlayer.dir != 'down') {
-        self.currentPlayer.anims.play('walkDown_' + this.jigs.playerStats.sprite_sheet);
-        self.currentPlayer.dir = 'down';
-        self.currentPlayer.speed = 'go';
-      }
-
+    if (!this.mainScene.inputPayload.left && !this.mainScene.inputPayload.right &&
+      !this.mainScene.inputPayload.up && !this.mainScene.inputPayload.down &&
+      this.player.speed != 'stopped') {
+      this.player.anims.play('player-stop-' + this.jigs.weapon);
+      this.player.speed = 'stopped';
+      this.player.dir = 'stopped';
+      this.player.setVelocityX(0);
+      this.player.setVelocityY(0);
     }
 
-    if (self.currentPlayer.speed == 'go') {
-      console.log('play');
-      if (!this.scene.walkSound.isPlaying) {
-        this.scene.walkSound.play();
+    if (this.mainScene.inputPayload.left) {
+      const tile = this.mainScene.colliderMap.getTileAtWorldXY(this.player.x - 16, this.player.y, true);
+      if (tile.index < 0) {
+        this.player.setVelocityX(-velocity);
+        this.player.setVelocityY(0);
+      }
+      else {
+        this.player.setVelocityX(0);
+      }
+      if (this.player.dir != 'left') {
+        this.player.anims.play('player-walkLeft-' + this.jigs.weapon);
+        this.player.dir = 'left';
+        this.player.speed = 'go';
+      }
+    }
+    else if (this.mainScene.inputPayload.right) {
+      const tile = this.mainScene.colliderMap.getTileAtWorldXY(this.player.x + 16, this.player.y, true);
+      //console.log(tile);
+      if (tile.index < 0) {
+        this.player.setVelocityX(velocity);
+        this.player.setVelocityY(0);
+      }
+      else {
+        this.player.setVelocityX(0);
+      }
+      if (this.player.dir != 'right') {
+        this.player.anims.play('player-walkRight-' + this.jigs.weapon);
+        this.player.dir = 'right';
+        this.player.speed = 'go';
+      }
+    }
+    else if (this.mainScene.inputPayload.up) {
+      const tile = this.mainScene.colliderMap.getTileAtWorldXY(this.player.x, this.player.y - 16, true);
+      //console.log(tile);
+      if (tile.index < 0) {
+        this.player.setVelocityY(-velocity);
+        this.player.setVelocityX(0);
+      }
+      else {
+        this.player.setVelocityY(0);
+      }
+      if (this.player.dir != 'up') {
+        this.player.anims.play('player-walkUp-' + this.jigs.weapon);
+        this.player.dir = 'up';
+        this.player.speed = 'go';
+      }
+    }
+    else if (this.mainScene.inputPayload.down) {
+      const tile = this.mainScene.colliderMap.getTileAtWorldXY(this.player.x, this.player.y + 16, true);
+      //console.log(tile);
+      if (tile.index < 0) {
+        this.player.setVelocityY(velocity);
+        this.player.setVelocityX(0);
+      }
+      else {
+        this.player.setVelocityY(0);
+      }
+      if (this.player.dir != 'down') {
+        this.player.anims.play('player-walkDown-' + this.jigs.weapon);
+        this.player.dir = 'down';
+        this.player.speed = 'go';
+      }
+    }
+    if (this.player.speed == 'go') {
+      if (!this.mainScene.walkSound.isPlaying) {
+        this.mainScene.walkSound.play();
       }
     }
   }
