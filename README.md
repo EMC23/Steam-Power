@@ -1,4 +1,7 @@
-![Steam-Power](https://github.com/EMC23/Steam-Power/blob/master/images/start.png) 
+<h1>Steam-Power</h1>
+<h2>A single player, single level miniRPG </h2>
+
+![Steam-Power](https://github.com/EMC23/Steam-Power/blob/master/images/start.png)
 ![Steam-Power](https://github.com/EMC23/JiGS/blob/master/images/Screenshot001.png)
 # Client
 
