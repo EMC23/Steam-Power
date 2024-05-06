@@ -1,3 +1,5 @@
+![Steam-Power](https://github.com/EMC23/Steam-Power/blob/master/images/start.png) 
+
 # Client
 
 ## Project setup
