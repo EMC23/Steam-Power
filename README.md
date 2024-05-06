@@ -4,7 +4,7 @@
 ![Steam-Power](https://github.com/EMC23/Steam-Power/blob/master/images/start.png)
 ![Steam-Power](https://github.com/EMC23/JiGS/blob/master/images/Screenshot001.png)
 
-![MrBlue](https://github.com/EMC23/Mr-Blue-Goes-Plumbing/blob/master/images/Screenshot001.png)
+![MrBlue](https://github.com/EMC23/Steam-Power/blob/master/images/Screenshot001.png)
 # Client
 
 ## Project setup
