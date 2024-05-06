@@ -1,3 +1,14 @@
+<h1>Steam-Power</h1>
+<h2>A single player, single level miniRPG </h2>
+
+![Steam-Power](https://raw.githubusercontent.com/EMC23/Steam-Power/master/images/start.png)
+
+An entry to GamedevJs Jam 2024
+
+Theme : POWER
+
+![Steam-Power](https://raw.githubusercontent.com/EMC23/Steam-Power/master/images/Screenshot001.png)
+
 # Client
 
 ## Project setup
