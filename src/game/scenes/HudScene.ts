@@ -46,7 +46,7 @@ export class HudScene extends Scene {
   create() {
 
     // Dialogue.
-    this.thing = this.createTextBox(this, 10, 380, {
+    this.thing = this.createTextBox(this, 10, 10, {
       wrapWidth: 500,
     }).setDisplayOrigin(0, 0).start(this.jigs.content, 50).setDepth(7);
 
@@ -68,7 +68,7 @@ export class HudScene extends Scene {
 
     ourGame.events.on('content', function () {
       this.thing.destroy();
-      this.thing = this.createTextBox(this, 10, 500, {
+      this.thing = this.createTextBox(this, 10, 10, {
         wrapWidth: 600,
       }).start(this.jigs.content, 50).setDepth(7)
     }, this);
@@ -80,44 +80,44 @@ export class HudScene extends Scene {
     }, this);
 
     //  Our Text object to display the Score
-    let info = this.add.text(15, 15, 'Credits: ', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
-    this.hud2 = this.add.text(15, 30, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
-    this.hud3 = this.add.text(15, 45, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
-    this.hud4 = this.add.text(15, 60, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
-    this.hud5 = this.add.text(15, 75, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
-    this.hud11 = this.add.text(15, 90, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
-    this.hud12 = this.add.text(15, 105, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    let info = this.add.text(735, 30, 'Credits: ', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    // this.hud2 = this.add.text(15, 30, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    // this.hud3 = this.add.text(15, 45, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    // this.hud4 = this.add.text(15, 60, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    // this.hud5 = this.add.text(15, 75, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    // this.hud11 = this.add.text(15, 90, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    // this.hud12 = this.add.text(15, 105, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
     this.hud6 = this.add.text(735, 15, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
-    this.hud7 = this.add.text(735, 30, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
-    this.hud8 = this.add.text(735, 45, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
-    this.hud9 = this.add.text(735, 60, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
-    this.hud10 = this.add.text(735, 75, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    // this.hud7 = this.add.text(735, 30, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    // this.hud8 = this.add.text(735, 45, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    // this.hud9 = this.add.text(735, 60, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
+    // this.hud10 = this.add.text(735, 75, '', { font: '12px Roboto', fill: '#ffffff', backgroundColor: 'rgba(0, 0, 0, 0.6)' }).setPadding({ left: 4, right: 4, top: 2, bottom: 2 });
   }
   update() {
     // HUD1
-    this.hud2.setText('State: ' + this.jigs.gameState);
-    this.hud3.setText('Node: ' + this.jigs.userMapGrid);
-    this.hud4.setText('TileMap: ' + this.jigs.tiled);
-    this.hud5.setText('Title: ' + this.jigs.nodeTitle);
-    this.hud11.setText('Name: ' + this.jigs.playerName);
-    this.hud12.setText('Id: ' + this.jigs.playerId);
+    // this.hud2.setText('State: ' + this.jigs.gameState);
+    // this.hud3.setText('Node: ' + this.jigs.userMapGrid);
+    // this.hud4.setText('TileMap: ' + this.jigs.tiled);
+    // this.hud5.setText('Title: ' + this.jigs.nodeTitle);
+    // this.hud11.setText('Name: ' + this.jigs.playerName);
+    // this.hud12.setText('Id: ' + this.jigs.playerId);
 
     // HUD2
-    this.hud6.setText('X: ' + this.x + ' Y: ' + this.y);
+    this.hud6.setText('X: ' + parseInt(this.x) + ' Y: ' + parseInt(this.y));
 
-    if (this.jigs.portalsArray[0]) {
-      this.hud7.setText('P1 X: ' + this.jigs.portalsArray[0].x + ' P1 Y: ' + this.jigs.portalsArray[0].y);
-    }
+    // if (this.jigs.portalsArray[0]) {
+    //   this.hud7.setText('P1 X: ' + this.jigs.portalsArray[0].x + ' P1 Y: ' + this.jigs.portalsArray[0].y);
+    // }
 
-    if (this.jigs.portalsArray[1]) {
-      this.hud8.setText('P2 X: ' + this.jigs.portalsArray[1].x + ' P2 Y: ' + this.jigs.portalsArray[1].y);
-    }
+    // if (this.jigs.portalsArray[1]) {
+    //   this.hud8.setText('P2 X: ' + this.jigs.portalsArray[1].x + ' P2 Y: ' + this.jigs.portalsArray[1].y);
+    // }
 
-    if (this.jigs.portalsArray[2]) {
-      this.hud9.setText('P3 X: ' + this.jigs.portalsArray[2].x + ' P3 Y: ' + this.jigs.portalsArray[2].y);
-    }
+    // if (this.jigs.portalsArray[2]) {
+    //   this.hud9.setText('P3 X: ' + this.jigs.portalsArray[2].x + ' P3 Y: ' + this.jigs.portalsArray[2].y);
+    // }
 
-    this.hud10.setText('City: ' + this.jigs.city);
+    // this.hud10.setText('City: ' + this.jigs.city);
   }
 
   GetValue = Phaser.Utils.Objects.GetValue;
@@ -130,7 +130,7 @@ export class HudScene extends Scene {
 
     var textBox = scene.rexUI.add.textBox({
       x: 10,
-      y: 480,
+      y: 10,
       text: this.getBBcodeText(scene, wrapWidth, fixedWidth, fixedHeight),
       action: scene.add.image(0, 0, 'nextPage').setVisible(false),
       title: (titleText) ? scene.add.text(0, 0, titleText, { font: 'bold 24px Neutron Demo', fill: '#ffffff' }) : undefined,
@@ -193,7 +193,7 @@ export class HudScene extends Scene {
   CreateDialog = function (scene, content) {
     return scene.rexUI.add.textArea({
       x: 0,
-      y: 260,
+      y: 20,
       width: 500,
       height: 400,
       // text: scene.add.text(),

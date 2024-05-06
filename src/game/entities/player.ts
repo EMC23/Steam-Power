@@ -32,14 +32,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.jigs = useJigsStore();
         scene.physics.add.sprite(this.jigs.playerX, this.jigs.playerY, 'player-walk-default');
 
-        this.mainScene.phaserPlayer = this.mainScene.physics.add.sprite(this.jigs.playerX, this.jigs.playerY, this.jigs.playerStats.sprite_sheet, frame)
+        this.mainScene.phaserPlayer = this.mainScene.physics.add.sprite(this.jigs.playerX, this.jigs.playerY, this.jigs.playerStats.sprite_sheet, frame).setSize(16, 16, true);
         this.mainScene.phaserPlayer.x = this.jigs.playerX;
         this.mainScene.phaserPlayer.y = this.jigs.playerY;
         this.mainScene.phaserPlayer.setTexture('player-walk-default');
         this.mainScene.phaserPlayer.play('player-stop-mace');
         this.mainScene.phaserPlayer.setDepth(7)
             .setInteractive({ cursor: 'url(/assets/images/cursors/speak.cur), pointer' })
-            .on('pointerdown', this.onPlayerDown.bind(this.mainScene))
+            .on('pointerdown', (event) => {
+                this.onPlayerDown(event);
+            })
             .setScale(1);
 
         /*       this.setTexture('player-walk-default');
@@ -52,13 +54,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //    this.mainScene.physics.add.existing(this);
         //     this.mainScene.physics.world.enable([this]);
 
-        this.playerMovement = new PlayerMovement(this.mainScene, this.mainScene.phaserPlayer,);
+        this.playerMovement = new PlayerMovement(this.mainScene, this.mainScene.phaserPlayer);
+
         this.staticNum = 0;
 
         this.light = new Light(this.mainScene, this.jigs.playerX, this.jigs.playerY, null);
         this.gun = new Gun(this.mainScene, this.jigs.playerX, this.jigs.playerY, 'gun');
         this.sword = new Sword(this.mainScene, 'player', this.jigs.playerX, this.jigs.playerY, null, this);
-        this.drones = new Drones(this.mainScene, this.jigs.playerX, this.jigs.playerY);
+        //this.drones = new Drones(this.mainScene, this.jigs.playerX, this.jigs.playerY);
         const spaceKey = this.mainScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         //  Phase 1: Key event.
@@ -82,9 +85,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         });
 
         this.mainScene.lights.enable().setAmbientColor(0x555555);
-    
 
-        this.mainScene.cameras.main.startFollow(this);
+
+        this.mainScene.cameras.main.startFollow(this.mainScene.phaserPlayer);
         var cam = this.mainScene.cameras.main;
         cam.setBounds(0, 0, this.jigs.mapWidth * 16, this.jigs.mapHeight * 16).setZoom(1);
 
@@ -97,16 +100,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         };
 
-
-
-        this.mainScene.key_left = this.mainScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+/*         this.mainScene.key_left = this.mainScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         this.mainScene.key_right = this.mainScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         this.mainScene.key_up = this.mainScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        this.mainScene.key_down = this.mainScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        this.mainScene.key_down = this.mainScene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN); */
 
         this.mainScene.input.on("pointerdown", (event) => {
 
-            // this.sword.strike();
+            if (this.jigs.playerStats.health <= 0) {
+                this.mainScene.phaserPlayer.setVelocityX(0);
+                this.mainScene.phaserPlayer.setVelocityY(0);
+                return;
+            }
+            this.sword.strike();
             //this.gun.shoot(event);
 
             //Send Mouse Co-ordinates from World point of view
@@ -115,22 +121,42 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         });
     }
 
-    handleMobCollision() {
 
-        console.log('-----------Mob-------------------')
+    attacked(enemy) {
 
+        console.log("attacked")
+        if (enemy == 'mob') {
+            this.jigs.playerStats.health = this.jigs.playerStats.health - 20
 
+        }
+
+        if (enemy == 'slime') {
+            this.jigs.playerStats.health = this.jigs.playerStats.health - 10
+
+        }
+
+        if (this.jigs.playerStats.health <= 0) {
+            this.jigs.playerStats.health = 0;
+            this.mainScene.phaserPlayer.play('player-hurt-mace');
+
+            this.jigs.content="Oh No! You Died. Try Again. Maybe you'll get further this time.";
+            this.mainScene.events.emit('content');
+
+            this.mainScene.time.delayedCall(1000, () => {
+                this.mainScene.scene.start("main");
+            });
+        }
     }
-    handleWallCollision() {
-
-        console.log('-------------------Wall--------------------')
 
 
-    }
-    onPlayerDown() {
-        this.jigs.playerState = "dead";
-        // this.room.leave(); // Backend
-        this.mainScene.scene.switch("main", "DeadScene");
+
+    onPlayerDown(event) {
+
+console.log('dead');
+
+         if(this.jigs.playerStats.health<=0){
+          //  this.scene.switch("DeadScene");
+         }
     }
 
     updatePlayer() {
@@ -157,7 +183,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             return;
         }
         //    self.physics.world.collide(self.localPlayer.entity, self.Walls.walls);
-        this.playerMovement.move(velocity);
+        this.playerMovement.move();
         this.jigs.mobClick = 0;
 
         /*         if (this.jigs.debug) {
@@ -167,7 +193,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         ///////////////////////////////////////////////////////////////////////
         //  Dispatch a Scene event
-        this.mainScene.events.emit('position', this.x, this.y);
+        this.mainScene.events.emit('position', this.mainScene.phaserPlayer.x, this.mainScene.phaserPlayer.y);
     }
 
     async lerp(self) {

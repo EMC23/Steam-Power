@@ -4,11 +4,44 @@
 
 import Phaser from 'phaser'
 
+const createBossAnims = (anims: Phaser.Animations.AnimationManager, entity) => {
+    walkAnim('default', 'default');
+    ////////////////////////////////////// Walk Anim 4 Directions //////////////////////////////
+    function walkAnim(weapon, type) {
+        anims.create({
+            key: 'boss-' + entity[1] + '-walkUp-' + weapon,
+            frames: anims.generateFrameNumbers('boss-' + entity[1] + '-walk-' + type, { frames: [0, 1, 2] }),
+            frameRate: 12,
+            repeat: -1
+        });
+
+        anims.create({
+            key: 'slime-' + entity[1] + '-walkLeft-' + weapon,
+            frames: anims.generateFrameNumbers('boss-' + entity[1] + '-walk-' + type, { frames: [3, 4, 5] }),
+            frameRate: 12,
+            repeat: -1
+        });
+
+        anims.create({
+            key: 'slime-' + entity[1] + '-walkDown-' + weapon,
+            frames: anims.generateFrameNumbers('boss-' + entity[1] + '-walk-' + type, { frames: [6, 7, 8] }),
+            frameRate: 12,
+            repeat: -1
+        });
+
+        anims.create({
+            key: 'slime-' + entity[1] + '-walkRight-' + weapon,
+            frames: anims.generateFrameNumbers('boss-' + entity[1] + '-walk-' + type, { frames: [9, 10, 11] }),
+            frameRate: 12,
+            repeat: -1
+        });
+    }
+}
+
+
 const createSlimeAnims = (anims: Phaser.Animations.AnimationManager, entity) => {
     walkAnim('default', 'default');
-
     ////////////////////////////////////// Walk Anim 4 Directions //////////////////////////////
-
     function walkAnim(weapon, type) {
         anims.create({
             key: 'slime-' + entity[1] + '-walkUp-' + weapon,
@@ -41,13 +74,20 @@ const createSlimeAnims = (anims: Phaser.Animations.AnimationManager, entity) => 
 
 }
 
+const createCharacterAnims = (anims: Phaser.Animations.AnimationManager, entityType, sheet) => {
+    console.log('entity:' + entityType);
 
-const createCharacterAnims = (anims: Phaser.Animations.AnimationManager, entity) => {
+    if (entityType == 'npc') {
 
-    console.log('entity:' + entity);
+        entityType = 'npc' + sheet;
+        console.log('define npc: ' + entityType);
 
-    if (entity == 'Zombie-Green') {
-        console.log('define zombie: ' + entity);
+
+        stopAnim('default', 'default');
+    }
+
+    if (entityType == 'Zombie-Green') {
+        console.log('define zombie: ' + entityType);
 
         walkAnim('default', 'default');
         stopAnim('default', 'default');
@@ -56,11 +96,7 @@ const createCharacterAnims = (anims: Phaser.Animations.AnimationManager, entity)
     const mobtypeB = ['Lizard-Bright-Green'];
     const mobtypeC = ['Lizard-Topaz'];
 
-
-
-
-
-    if (mobtypeA.includes(entity)) {
+    if (mobtypeA.includes(entityType)) {
         walkAnim('saber', 'saber');
         hurtAnim('saber', 'saber');
         stopAnim('saber', 'saber');
@@ -68,7 +104,7 @@ const createCharacterAnims = (anims: Phaser.Animations.AnimationManager, entity)
         slashAnim('saber', 'slash-oversize');
     }
 
-    if (mobtypeB.includes(entity)) {
+    if (mobtypeB.includes(entityType)) {
         walkAnim('scimitar', '128-scimitar');
         hurtAnim('scimitar', 'default');
         spellAnim('default');
@@ -76,11 +112,14 @@ const createCharacterAnims = (anims: Phaser.Animations.AnimationManager, entity)
         stopAnim('scimitar', '128-scimitar');
     }
 
-    if (mobtypeC.includes(entity)) {
+    if (mobtypeC.includes(entityType)) {
         walkAnim('flail', 'flail');
         stopAnim('flail', 'flail');
+        hurtAnim('flail', 'flail');
+
+
     }
-    if (entity == 'player') {
+    if (entityType == 'player') {
         console.log('load player anims');
         walkAnim('default', 'default');
         walkAnim('mace', 'mace');
@@ -110,32 +149,32 @@ const createCharacterAnims = (anims: Phaser.Animations.AnimationManager, entity)
     ////////////////////////////////////// Walk Anim 4 Directions //////////////////////////////
     function walkAnim(weapon, type) {
 
-        console.log(entity + '-walk-' + type)
+        console.log(entityType + '-walk-' + type)
 
         anims.create({
-            key: entity + '-walkUp-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-walk-' + type, { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8] }),
+            key: entityType + '-walkUp-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-walk-' + type, { frames: [0, 1, 2, 3, 4, 5, 6, 7, 8] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-walkLeft-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-walk-' + type, { frames: [9, 10, 11, 12, 13, 14, 15, 16, 17] }),
+            key: entityType + '-walkLeft-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-walk-' + type, { frames: [9, 10, 11, 12, 13, 14, 15, 16, 17] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-walkDown-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-walk-' + type, { frames: [18, 19, 20, 21, 22, 23, 24, 25, 26] }),
+            key: entityType + '-walkDown-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-walk-' + type, { frames: [18, 19, 20, 21, 22, 23, 24, 25, 26] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-walkRight-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-walk-' + type, { frames: [27, 28, 29, 30, 31, 32, 33, 34, 35] }),
+            key: entityType + '-walkRight-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-walk-' + type, { frames: [27, 28, 29, 30, 31, 32, 33, 34, 35] }),
             frameRate: 12,
             repeat: -1
         });
@@ -144,8 +183,8 @@ const createCharacterAnims = (anims: Phaser.Animations.AnimationManager, entity)
     ////////////////////////////////////// Stop Anim 1 Direction //////////////////////////////
     function stopAnim(weapon, type) {
         anims.create({
-            key: entity + '-stop-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-walk-' + type, { frames: [18, 18, 18, 18] }),
+            key: entityType + '-stop-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-walk-' + type, { frames: [18, 18, 18, 18] }),
             frameRate: 12,
             repeat: -1
         });
@@ -153,29 +192,29 @@ const createCharacterAnims = (anims: Phaser.Animations.AnimationManager, entity)
     ////////////////////////////////////// Spell Anim 4 Directions //////////////////////////////
     function spellAnim(weapon) {
         anims.create({
-            key: entity + '-spellUp-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-spell-' + weapon, { frames: [0, 1, 2, 3, 4, 5, 6] }),
+            key: entityType + '-spellUp-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-spell-' + weapon, { frames: [0, 1, 2, 3, 4, 5, 6] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-spellLeft-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-spell-' + weapon, { frames: [7, 8, 9, 10, 11, 12, 13] }),
+            key: entityType + '-spellLeft-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-spell-' + weapon, { frames: [7, 8, 9, 10, 11, 12, 13] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-spellDown-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-spell-' + weapon, { frames: [14, 15, 16, 17, 18, 19, 20] }),
+            key: entityType + '-spellDown-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-spell-' + weapon, { frames: [14, 15, 16, 17, 18, 19, 20] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-spellRight-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-spell-' + weapon, { frames: [21, 22, 23, 24, 25, 26, 27] }),
+            key: entityType + '-spellRight-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-spell-' + weapon, { frames: [21, 22, 23, 24, 25, 26, 27] }),
             frameRate: 12,
             repeat: -1
         });
@@ -183,104 +222,100 @@ const createCharacterAnims = (anims: Phaser.Animations.AnimationManager, entity)
     ////////////////////////////////////// Thrust Anim 4 Directions //////////////////////////////
     function thrustAnim(weapon, type) {
         anims.create({
-            key: entity + '-thrustUp-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-thrust-' + type, { frames: [0] }),
+            key: entityType + '-thrustUp-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-thrust-' + type, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-thrustLeft-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-thrust-' + type, { frames: [0] }),
+            key: entityType + '-thrustLeft-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-thrust-' + type, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-thrustDown-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-thrust-' + type, { frames: [0] }),
+            key: entityType + '-thrustDown-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-thrust-' + type, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-thrustRight-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-thrust-' + type, { frames: [0] }),
+            key: entityType + '-thrustRight-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-thrust-' + type, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
     }
-
 
     ////////////////////////////////////// Hurt Anim 1 Direction //////////////////////////////
     function hurtAnim(weapon, type) {
         anims.create({
-            key: entity + '-hurt-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-hurt-' + type, { frames: [0, 1, 2, 3, 4, 5] }),
+            key: entityType + '-hurt-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-hurt-' + type, { frames: [0, 1, 2, 3, 4, 5] }),
             frameRate: 12,
             repeat: 0
         });
     }
-
-
-
     ////////////////////////////////////// Shoot Anim 4 Directions //////////////////////////////
     function shootAnim(weapon) {
         anims.create({
-            key: entity + '-shootUp-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-shoot-' + weapon, { frames: [0] }),
+            key: entityType + '-shootUp-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-shoot-' + weapon, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-shootLeft-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-shoot-' + weapon, { frames: [0] }),
+            key: entityType + '-shootLeft-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-shoot-' + weapon, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-shootDown-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-shoot-' + weapon, { frames: [0] }),
+            key: entityType + '-shootDown-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-shoot-' + weapon, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-shootRight-' + entity,
-            frames: anims.generateFrameNumbers(entity + '-shoot-' + weapon, { frames: [0] }),
+            key: entityType + '-shootRight-' + entityType,
+            frames: anims.generateFrameNumbers(entityType + '-shoot-' + weapon, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
     }
-
     ////////////////////////////////////////////////////////////////////////////////////
     function slashAnim(weapon, type) {
+        console.log(entityType + '-slash-' + weapon)
         anims.create({
-            key: entity + '-slashUp-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-' + type + '-' + weapon, { frames: [0, 1, 2, 3, 4, 5, 0] }),
+            key: entityType + '-slashUp-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-' + type + '-' + weapon, { frames: [0, 1, 2, 3, 4, 5, 0] }),
             frameRate: 12,
             repeat: 0
         });
 
         anims.create({
-            key: entity + '-slashLeft-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-' + type + '-' + weapon, { frames: [6, 7, 8, 9, 10, 11, 6] }),
+            key: entityType + '-slashLeft-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-' + type + '-' + weapon, { frames: [6, 7, 8, 9, 10, 11, 6] }),
             frameRate: 12,
             repeat: 0
         });
 
         anims.create({
-            key: entity + '-slashDown-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-' + type + '-' + weapon, { frames: [12, 13, 14, 15, 16, 17, 12] }),
+            key: entityType + '-slashDown-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-' + type + '-' + weapon, { frames: [12, 13, 14, 15, 16, 17, 12] }),
             frameRate: 12,
             repeat: 0
         });
 
         anims.create({
-            key: entity + '-slashRight-' + weapon,
-            frames: anims.generateFrameNumbers(entity + '-' + type + '-' + weapon, { frames: [18, 19, 20, 21, 22, 23, 18] }),
+            key: entityType + '-slashRight-' + weapon,
+            frames: anims.generateFrameNumbers(entityType + '-' + type + '-' + weapon, { frames: [18, 19, 20, 21, 22, 23, 18] }),
             frameRate: 12,
             repeat: 0
         });
@@ -288,34 +323,33 @@ const createCharacterAnims = (anims: Phaser.Animations.AnimationManager, entity)
 
     function toolWhipAnim(weapon) {
         anims.create({
-            key: entity + '-toolWhipUp_' + weapon,
-            frames: anims.generateFrameNumbers(entity, { frames: [0] }),
+            key: entityType + '-toolWhipUp_' + weapon,
+            frames: anims.generateFrameNumbers(entityType, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-toolWhipLeft_' + weapon,
-            frames: anims.generateFrameNumbers(entity, { frames: [0] }),
+            key: entityType + '-toolWhipLeft_' + weapon,
+            frames: anims.generateFrameNumbers(entityType, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-toolWhipDown_' + weapon,
-            frames: anims.generateFrameNumbers(entity, { frames: [0] }),
+            key: entityType + '-toolWhipDown_' + weapon,
+            frames: anims.generateFrameNumbers(entityType, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
 
         anims.create({
-            key: entity + '-toolWhipRight_' + weapon,
-            frames: anims.generateFrameNumbers(entity, { frames: [0] }),
+            key: entityType + '-toolWhipRight_' + weapon,
+            frames: anims.generateFrameNumbers(entityType, { frames: [0] }),
             frameRate: 12,
             repeat: -1
         });
     }
-
 }
 
 const createSwitchesAnims = (anims: Phaser.Animations.AnimationManager,
@@ -343,8 +377,8 @@ const createSwitchesAnims = (anims: Phaser.Animations.AnimationManager,
     }
 
     if (switchType == 4) {
-        OnArr = [0];
-        OffArr = [0, 3, 6, 9];
+        OffArr = [0];
+        OnArr = [0, 3, 6, 9];
     }
 
     if (switchType == 5) {
@@ -361,27 +395,35 @@ const createSwitchesAnims = (anims: Phaser.Animations.AnimationManager,
         OnArr = [0, 3, 6]
         OffArr = [6]
     }
-    console.log('create ' + entity);
-    OnArr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    OffArr = [11];
+
+    if (switchType == 8) {
+        OffArr = [0, 1, 2, 3]
+        OnArr = [4]
+    }
+
+    if (switchType == 9) {
+        OffArr = [0]
+        OnArr = [1]
+    }
+
     anims.create({
         key: texture + 'On',
         frames: anims.generateFrameNumbers(entity, { frames: OnArr }),
         frameRate: 12,
-        repeat: -1
+        repeat: repeat
     });
 
     anims.create({
         key: texture + 'Off',
         frames: anims.generateFrameNumbers(entity, { frames: OffArr }),
         frameRate: 12,
-        repeat: -1
+        repeat: repeat
     });
-
 }
 
 export {
     createCharacterAnims,
     createSlimeAnims,
+    createBossAnims,
     createSwitchesAnims
 }

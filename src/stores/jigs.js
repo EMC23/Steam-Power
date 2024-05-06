@@ -19,9 +19,9 @@ export const useJigsStore = defineStore("jigs", {
       userState: "GamePhaser",
       profileId: "1",
       userMG: "18",
-      credits: "313770",
-      health: "50",
-      energy: "6",
+      credits: 0,
+      health: 100,
+      energy: 6,
       sprite_sheet: "player-walk-default",
       level: "1",
       intelligence: "10",
@@ -65,23 +65,79 @@ Will you find my Balls?`,
 
     item: 0,
 
-    /** @type {{ text: string, x: number, y: number, sprite: number, isHandler: boolean}[]} */
-    npcArray: [],
+    /** @type {{ text: string, x: number, y: number, sprite: number, bark: string}[]} */
+    npcArray: [
 
-    /** @type {{ target:number, name: string, x: number, y: number, sprite: number, type: string, health: number, following: number}[]} */
+      ["Mr Blue", "2363", "3330", "1078", "Take the white pill and get rid of your indigestion. You seem like a good kid. But you got no reputation and I can't afford to work with no kid with no reputation. Come back to me when you got yourself some street smarts.", null, "187"],
+      ["Pope Turlock", "2743", "3380", "88350", "Yo Dawg, Firs you get de money, den you get de power.", null, "141"],
+      ["Loren Richmond", "2793", "3470", "68549", "The City Council is inept. We need power or we have no defences.", null, "361"],
+      ["Sherman Waldron", "2793", "3400", "68549", "I HAVE THE POWER!!", null, "362"],
+
+      ["Hannah Arendt", "2298", "3325", "66690", "The extreme form of power is All against One, the extreme form of violence is One against All.", null, "363"],
+      ["James Baldwin", "2657", "1127", "30171", "It is certain, in any case, that ignorance, allied with power, is the most ferocious enemy justice can have.", null, "156"],
+      ["Michel Foucault", "1863", "3430", "19920", "Where there is power, there is resistance.", null, "155"],
+      ["George Orwell", "1783", "3370", "31679", "The object of power is power.", null, "364"],
+      ["bell hooks", "2447", "3344", "20176", "Sometimes people try to destroy you, precisely because they recognize your power - not because they don't see it, but because they see it and they don't want it to exist. ", null, "363"],
+      ["Milan Kundera", "2003", "3470", "19920", "The struggle of man against power is the struggle of memory against forgetting. ", null, "156"],
+      ["Octavia Butler", "1803", "3470", "33403", "All struggles are essentially power struggles. Who will rule? Who will lead? Who will define, refine, confine, design? Who will dominate? All struggles are essentially power struggles,and most are no more intellectual than two rams knocking their heads together.", null, "155"],
+      ["Noam Chomsky", "1846", "3190", "41123", "People are dangerous. If they're able to involve themselves in issues that matter, they may change the distribution of power, to the detriment of those who are rich and privileged.", null, "364"],
+
+      ["Ursula K. Le Guin", "2393", "3400", "12032", "We live in capitalism. Its power seems inescapable. So did the divine right of kings. Any human power can be resisted and changed by human beings. Resistance and change often begin in art, and very often in our art, the art of words.", null, "363"],
+      ["Howard Zinn", "2584", "2095", "47054", "But remember, this power of the people on top depends on the obedience of the people below. When people stop obeying, they have no power. ", null, "156"],
+      ["Angela Y. Davis", "1903", "3400", "36466", "Movements are most powerful when they begin to affect the vision and perspective of those who do not necessarily associate themselves with those movements.", null, "155"],
+      ["James Connolly", "2014", "3400", "57952", "No individual can develop all his powers if he is even partially under the control of another, even if that other sincerely wishes him well.", null, "364"],
+
+      ["Oscar Wilde", "2114", "3300", "69400", "Everything in the world is about sex except sex. Sex is about power.", null, "365"],
+      ["Mahatma Gandhi", "1914", "3450", "33861", "The day the power of love overrules the love of power, the world will know peace.", "0", "366"],
+
+      ["Francis Bacon", "2014", "3180", "22063", "Knowledge is power.", null, "367"],
+
+
+
+      ["end3r", "461", "120", "74405", "Congrats!", null, "369"],
+      ["Hjönk We Goos", "250", "300", "goose", "Well Done!", null, "369"],
+      ["derBenniBanni", "600", "400", "derbennibanni", "You're a Hero!", null, "369"],
+      ["Rizky2706", "300", "200", "78927", "Tops!", null, "369"],
+      ["Marcel", "353", "120", "21813", "Yahoo!", null, "369"],
+
+
+      ["Khan the Road Warrior", "900", "600", "5088", "Feck Off!", null, "369"]
+    ],
+
+    /** @type {{ target:number, name: string, x: number, y: number, sprite: number, type: string, health: number, following: number,weapon: string}[]} */
     mobArray: [
-      ["29", "Mr jones", "2655", "3430", "25292", "Zombie-Green","default"],
-      ["29", "Alex", "2065", "3430", "25293", "Zombie-Green","default"],
-      ["29", "ding", "2266", "3027", "25293", "Lizard-Green","saber"],
-      ["29", "ding", "2430", "2869", "25293", "Lizard-Green","saber"],
-      ["29", "ding", "2630", "2869", "25293", "Lizard-Bright-Green", "scimitar"],
-      ["29", "ding", "2270", "3193", "25293", "Lizard-Topaz", "flail"],
+      ["29", "Mr jones", "2605", "3400", "25292", "Zombie-Green", "default", 100, 0],
+      ["29", "Alex", "2165", "3400", "25293", "Zombie-Green", "default", 100, 0],
+      ["29", "ding", "2266", "3027", "25293", "Lizard-Green", "saber", 100, 0],
+      ["29", "ding", "2430", "2869", "25293", "Lizard-Green", "saber", 100, 0,],
+      ["29", "ding", "2630", "2869", "25293", "Lizard-Bright-Green", "scimitar", 100, 0],
+      ["29", "ding", "2270", "3193", "25293", "Lizard-Topaz", "flail", 100, 0],
     ],
     /** @type {{ target:number, name: string, x: number, y: number, health: number, level: number, width: number, height: number}[]} */
     slimeArray: [
       [30, 'Algae', 2055, 3210, 100, 12, 35, 31],
-      [30, 'Coral', 2665, 3200, 100, 12, 48, 48],
-      [30, 'Dream', 2365, 3200, 100, 12, 34, 28]],
+      [30, 'Algae', 2665, 3200, 100, 12, 35, 31],
+      [30, 'Algae', 2365, 3200, 100, 12, 35, 31],
+
+      [30, 'Coral', 2849, 2043, 100, 12, 48, 48],
+      [30, 'Coral', 2849, 1911, 100, 12, 48, 48],
+      [30, 'Coral', 2825, 1764, 100, 12, 48, 48],
+
+
+      [30, 'Dream', 2758, 1438, 100, 12, 34, 28],
+      [30, 'Dream', 2841, 1068, 100, 12, 34, 28],
+      [30, 'Dream', 2819, 689, 100, 12, 34, 28]
+
+    ],
+
+    /** @type {{ target:number, name: string, x: number, y: number, health: number, level: number, width: number, height: number}[]} */
+
+    bossArray: [
+      [30, 'Clockwork Heavy Combat Spider', 2847, 576, 100, 12, 143, 118],
+      [30, 'Clockwork Heavy Combat Spider', 1855, 976, 100, 12, 143, 118],
+      [30, 'Clockwork Worker', 1855, 1450, 100, 12, 45, 34],
+
+    ],
 
     /** @type {{ text: string, x: number, y: number, sprite: number}[]} */
     rewardsArray: [],
@@ -113,10 +169,10 @@ Will you find my Balls?`,
 
     soundtrack: 'blank',
 
-    weapon: "hammer",
+    weapon: "glowsword",
 
     /** @type {{ text: string }[]} */
-    content: "Press C to Change Weapon",
+    content: "Power To The People",
 
     npc: 0,
 
@@ -128,11 +184,11 @@ Will you find my Balls?`,
 
     tilesetArray_1: ['TileA5'],
     tilesetArray_2: ['background',
-     'Hospital_A2',
-     'Hospital_A4',
-     'TileA2', 'Modern_Int_A4', '006',
+      'Hospital_A2',
+      'Hospital_A4',
+      'TileA2', 'Modern_Int_A4', '006',
       'Modern_Outside_A4-32', 'chimera_A2', 'chimera_A4', 'chimera_A5', 'Volcano_A1', 'Volcano_A2', 'Volcano_A4',
-      'Steampunk_Interior_A2', 'Steampunk_Interior_A4', 'steampunk_ext_A4', 'TileA4'],
+      'Steampunk_Interior_A2', 'Steampunk_Interior_A4', 'steampunk_ext_A4', 'TileA1','TileA4'],
     tilesetArray_3: ['004', 'doors1',
       '1de1d0b3-3300-4b5c-8f94-c738c7a11b0b',
       '01b87ab8-4832-4727-b263-0d5e2641e2d8',
@@ -142,17 +198,52 @@ Will you find my Balls?`,
       'Modern_Int_A2',
       'Modern_Int_B_Sheet',
       'Modern_Int_D_Sheet',
-      'Refinery_B',
+      'Refinery_B', 'Refinery_C',
       'Hospital_A2',
       'Hospital_B',
       'Hospital_C',
       'Hospital_D',
       'Sewer_B',
-       'Mad_Scientists_Lab_C-32', 'TileC'],
-    tilesetArray_4: ['TileC', 'Modern_Int_B_Sheet', 'Hospital_B', 'steampunk_ext_D', 'steampunk_ext_D', 'chimera_B', '006', '01b87ab8-4832-4727-b263-0d5e2641e2d8'],
-    tilesetArray_5: ['BBPA_Outside_A-32', 'Modern_Int_A4', , '1de1d0b3-3300-4b5c-8f94-c738c7a11b0b', 'chimera_B'],
+      'Mad_Scientists_Lab_C-32', 'TileC'],
+    tilesetArray_4: ['Sewer_B', 'Modern_Outside_E_Sheet-urban decay','TileC', 'Modern_Int_B_Sheet', 'Hospital_B', 'steampunk_ext_D', 'steampunk_ext_D', 'chimera_B', '006', '01b87ab8-4832-4727-b263-0d5e2641e2d8'],
+    tilesetArray_5: ['Sewer_B','BBPA_Outside_A-32', 'Modern_Int_A4', , '1de1d0b3-3300-4b5c-8f94-c738c7a11b0b', 'chimera_B'],
     portalsArray: [],
-    switchesArray: [],
+    /** @type {{
+     * entity_id: string, field_x_value:number, field_y_value:number, field_file_value: string, field_frameheight_value:number,
+     * field_framewidth_value:number,
+     * field_number_of_frames_value:number,
+     * field_switch_type_value:number,
+     * field_repeatable_value:number,
+     * field_starting_frame_value:number,
+     * field_end_frame_value:number,
+     * switchState:boolean
+     *
+     *  }[]} */
+    switchesArray: [
+      ["1", 200, 200, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["2", 1880, 3200, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["3", 2272, 3114, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["4", 2637, 3099, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["5", 2694, 2743, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["6", 3026, 2178, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["7", 3026, 1846, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["8", 2683, 1441, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["9", 2978, 872, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["10", 2307, 173, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["11", 2104, 900, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["12", 2098, 1401, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["13", 2152, 1878, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["14", 133, 3208, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["15", 349, 2185, 'lever', 32, 32, 12, 4, 0, 0, 10, false],
+      ["16", 1960, 2944, 'steam-001', 48, 48, 4, 8, -1, 0, 3, false],
+      ["17", 1960, 3134, 'steam-002', 48, 48, 4, 8, -1, 0, 3, false],
+      ["18", 1960, 3034, 'steam-003', 48, 48, 4, 8, -1, 0, 3, false],
+      ["19", 2744, 3002, 'steam-004', 48, 48, 4, 8, -1, 0, 3, false],
+      ["20", 2844, 3002, 'steam-005', 48, 48, 4, 8, -1, 0, 3, false],
+      ["21", 400, 200, 'guy001', 97, 76, 2, 9, 0, 0, 3, false],
+
+
+    ],
     firesArray: [],
     fireBarrelsArray: [],
     leversArray: [],

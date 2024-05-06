@@ -14,13 +14,14 @@ import Switches from "../entities/switches";
 import NPCs from "../entities/npcs";
 import Mobs from "../entities/mobs";
 import Slimes from "../entities/slimes";
+import Bosses from "../entities/bosses";
 import Walls from "../entities/walls";
 import Folios from "../entities/folios";
 
 
 export class MainScene extends Phaser.Scene {
     /*     room: Room; */
-   phaserPlayer: any;
+    phaserPlayer: any;
     player: any;
     playerEntities: { [sessionId: string]: Phaser.Types.Physics.Arcade.ImageWithDynamicBody } = {};
     debugFPS: Phaser.GameObjects.Text;
@@ -46,7 +47,7 @@ export class MainScene extends Phaser.Scene {
     add: any;
     anims: any;
     make: any;
-    physics: any;
+    //physics: any;
     key_left: any;
     key_up: any;
     key_right: any;
@@ -59,7 +60,7 @@ export class MainScene extends Phaser.Scene {
     game: any;
     colliderMap: any;
     npcGroup: any;
-    rewards: any;
+    //rewards: any;
     sys: any;
     plugins: any;
     messenger: Messenger;
@@ -68,24 +69,34 @@ export class MainScene extends Phaser.Scene {
     Walls: Walls;
     Mobs: Mobs;
     Slimes: Slimes;
+    Bosses: Bosses
     NPCs: NPCs;
     Rewards: Rewards;
     Folio: Folios;
     walkSound: Phaser.Sound.BaseSound;
     soundtrack: Phaser.Sound.BaseSound;
     soundtrack2: Phaser.Sound.BaseSound;
-    mobGroup:any;
+    mobGroup: any;
+    slimeGroup: any;
+    bossGroup: any;
+    whipSound: Phaser.Sound.BaseSound;
+    swordSound: Phaser.Sound.BaseSound;
+    leverSound: Phaser.Sound.BaseSound;
+    zombieSound: Phaser.Sound.BaseSound;
+    lizardSound: Phaser.Sound.BaseSound;
+    steam_1Sound: Phaser.Sound.BaseSound;
 
     constructor() {
         super({ key: "main" });
         this.jigs = useJigsStore();
         /*       this.client   = new Client(BACKEND_URL); */
-         this.Portals = new Portals;
+        this.Portals = new Portals;
         this.Switches = new Switches;
         this.Walls = new Walls;
         this.NPCs = new NPCs;
         this.Mobs = new Mobs(this);
-        this.Slimes= new Slimes;
+        this.Slimes = new Slimes(this);
+        this.Bosses = new Bosses(this);
         this.Rewards = new Rewards;
         this.Folio = new Folios;
     }
@@ -96,80 +107,88 @@ export class MainScene extends Phaser.Scene {
         this.messenger = new Messenger;
         this.load.audio('walk', ['./assets/audio/thud.ogg', './assets/audio/thud.mp3']);
         //this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
-       // this.load.addFile(new WebFont(this.load, ['Roboto', 'Neutron Demo']))
+        // this.load.addFile(new WebFont(this.load, ['Roboto', 'Neutron Demo']))
         this.load.scenePlugin('AnimatedTiles', 'https://raw.githubusercontent.com/nkholski/phaser-animated-tiles/master/dist/AnimatedTiles.js', 'animatedTiles', 'animatedTiles');
     }
 
     async create() {
         this.debugFPS = this.add.text(4, 4, "", { color: "#ff0000", });
 
-        this.player = new Player(this, this.jigs.playerX, this.jigs.playerY,8);
+        this.player = new Player(this, this.jigs.playerX, this.jigs.playerY, 8);
 
         this.cursorKeys = this.input.keyboard.createCursorKeys();
         this.input.setDefaultCursor('url(./assets/images/cursors/blank.cur), pointer');
 
         this.walkSound = this.sound.add('walk', { volume: 0.05 });
 
+
+
+        this.whipSound = this.sound.add('a-whip', { volume: .07 });
+        this.swordSound = this.sound.add('c-sword', { volume: .1 });
+        this.leverSound = this.sound.add('e-lever', { volume: .5 });
+        this.zombieSound = this.sound.add('f-zombie', { volume: .5 });
+        this.lizardSound = this.sound.add('g-lizard', { volume: .1 });
+        this.steam_1Sound = this.sound.add('steam_1', { volume: .1 });
+
         this.soundtrack = this.sound.add(this.jigs.soundtrack, { volume: .1 });
-        this.soundtrack2 = this.sound.add('spooky', { volume: .1 });
+        this.soundtrack2 = this.sound.add('guitar_game2', { volume: .1 ,loop:true});
 
         this.soundtrack.play();
         this.soundtrack2.play();
         this.soundtrack2.once('complete', function (music) {
 
-           // this.soundtrack3.play();
+            // this.soundtrack3.play();
         });
+
+
+
+
+
         this.messenger.initMessages(this);
         this.jigs.playerState = "alive";
         //this.jigs.content = "City: " + this.jigs.city;
         this.events.emit('content');
-          this.Rewards.add(this);
+        //this.Rewards.add(this);
         this.NPCs.add(this);
         this.Mobs.add();
-        this.Slimes.add(this);
-        this.Portals.add(this);
+        this.Slimes.add();
+        this.Bosses.add();
+        //this.Portals.add(this);
         this.Switches.add(this);
-        this.Walls.add(this);
-        this.Folio.add(this);
-
+        //this.Walls.add(this);
+        //this.Folio.add(this);
 
         this.physics.add.collider(this.phaserPlayer, this.mobGroup, this.handleMobCollision, undefined, this);
-
+        this.physics.add.collider(this.phaserPlayer, this.slimeGroup, this.handleSlimeCollision, undefined, this);
+        this.physics.add.collider(this.slimeGroup, this.colliderMap, this.handleSlimeWallCollision, undefined, this);
+        this.physics.add.collider(this.bossGroup, this.colliderMap, this.handleBossWallCollision, undefined, this);
 
     }
-
-
 
     handleMobCollision() {
-
-        console.log('-----------Mob-------------------')
-
+        this.player.attacked('mob');
+        this.player.playerMovement.bounce();
 
     }
 
+    handleSlimeCollision() {
+        this.player.attacked('slime');
+        this.player.playerMovement.bounce();
+    }
 
+    handleSlimeWallCollision(slime, wall) {
+        this.Slimes.handleTileCollision();
 
+    }
 
+    handleBossWallCollision(boss, wall) {
+        this.Bosses.handleTileCollision();
 
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-killer(){
-
-console.log('dead');
-
-
-}
-
+    killer() {
+        console.log('dead');
+    }
 
     updateState() {
         if (this.jigs.playerState == "alive") {
@@ -233,10 +252,9 @@ console.log('dead');
         console.log(this.jigs.choice);
     }
 
-
     hydrateSwitches(response, id) {
         this.jigs.switchesArray.push(id);
-        //this.updatePhaser
+        //this.updatePlayer
     }
 
     /*     async connect(room) {
@@ -260,9 +278,9 @@ console.log('dead');
 
     update(time: number, delta: number): void {
 
-      //  if (this.player) {
-         //   this.physics.world.collide(this.player, this.Walls.walls);
-     //   }
+        //  if (this.player) {
+        //   this.physics.world.collide(this.player, this.Walls.walls);
+        //   }
 
         // skip loop if not connected yet.
         //   if (!this.currentPlayer || !this.playerEntities) { return; }
@@ -276,28 +294,31 @@ console.log('dead');
 
     fixedTick(time, delta) {
         this.currentTick++;
-
         //     console.log(this.currentTick);
         if (this.player !== undefined) {
             this.player.updatePlayer();
         }
-
         if (this.jigs.mobArray != undefined) {
-     //       this.Mobs.updateMobs(this);
+            this.Mobs.updateMobs(this);
         }
-
+        if (this.jigs.slimeArray != undefined) {
+            this.Slimes.updateSlimes(this);
+        }
+        if (this.jigs.bossArray != undefined) {
+            this.Bosses.updateBosses(this);
+        }
         for (let sessionId in this.playerEntities) {
             /*   if (sessionId === this.room.sessionId) {
                   continue;
               } */
-/*             if (this.playerEntities[sessionId] !== undefined) {
-                const entity = this.playerEntities[sessionId];
-                if (entity.data) {
-                    const { serverX, serverY } = entity.data.values;
-                    entity.x = Phaser.Math.Linear(entity.x, serverX, 0.2);
-                    entity.y = Phaser.Math.Linear(entity.y, serverY, 0.2);
-                }
-            } */
+            /*             if (this.playerEntities[sessionId] !== undefined) {
+                            const entity = this.playerEntities[sessionId];
+                            if (entity.data) {
+                                const { serverX, serverY } = entity.data.values;
+                                entity.x = Phaser.Math.Linear(entity.x, serverX, 0.2);
+                                entity.y = Phaser.Math.Linear(entity.y, serverY, 0.2);
+                            }
+                        } */
         }
     }
 

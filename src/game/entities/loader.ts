@@ -8,6 +8,7 @@ import Layers from "../entities/layers";
 import { createCharacterAnims } from "../entities/anim";
 import { createSwitchesAnims } from "../entities/anim";
 import { createSlimeAnims } from "../entities/anim";
+import { createBossAnims } from "../entities/anim";
 
 export default class Load {
 
@@ -32,6 +33,19 @@ export default class Load {
         const textureManager = this.mainScene.textures;
 
         this.mainScene.load.audio(this.jigs.soundtrack, './assets/soundtracks/' + this.jigs.soundtrack + '.mp3');
+
+        this.mainScene.load.audio('a-whip', './assets/audio/a-whip.mp3');
+        this.mainScene.load.audio('c-sword', './assets/audio/c-sword.mp3');
+        this.mainScene.load.audio('e-lever', './assets/audio/e-lever.mp3');
+        this.mainScene.load.audio('f-zombie', './assets/audio/f-zombie.mp3');
+        this.mainScene.load.audio('g-lizard', './assets/audio/g-lizard.mp3');
+
+        this.mainScene.load.audio('steam_1', './assets/audio/steam_1.mp3');
+        this.mainScene.load.audio('guitar_game2', './assets/audio/guitar_game2.mp3');
+
+
+
+
         this.mainScene.load.image('black', './assets/images/black.png');
         this.mainScene.load.image('pink', './assets/images/pink.png');
         this.mainScene.load.tilemapTiledJSON('level001', './assets/json/level001.json?' + Math.random());
@@ -71,8 +85,8 @@ export default class Load {
         }
 
         if (this.jigs.npcArray) {
-            this.jigs.npcArray.forEach(function loader(Npc) {
-                this.mainScene.load.spritesheet('npc' + Npc[3], './assets/images/Sprites/' + Npc[3] + '.png', { frameWidth: 64, frameHeight: 64 });
+            this.jigs.npcArray.forEach((Npc) => {
+                this.mainScene.load.spritesheet('npc' + Npc[3] + '-walk-default', './assets/images/sprites/npc/' + Npc[3] + '.png', { frameWidth: 64, frameHeight: 64 });
             });
         }
         if (this.jigs.slimeArray) {
@@ -81,11 +95,19 @@ export default class Load {
             }
             )
         };
+
+        if (this.jigs.bossArray) {
+            this.jigs.bossArray.forEach((boss) => {
+                this.mainScene.load.spritesheet('boss-' + boss[1] + '-walk-default', './assets/images/sprites/boss/' + boss[1] + '.png', { frameWidth: boss[6], frameHeight: boss[7] });
+            }
+            )
+        };
+
         this.mobMap = new Map();
         this.mobMap.set('Lizard-Green', { sheets: [{ 'hurt-saber': 64 }, { 'walk-saber': 64 }, { 'spell-default': 64 }, { 'slash-oversize-saber': 192 }] });
         this.mobMap.set('Zombie-Green', { sheets: [{ 'hurt-default': 64 }, { 'walk-default': 64 }] });
         this.mobMap.set('Lizard-Bright-Green', { sheets: [{ 'hurt-default': 64 }, { 'walk-128-scimitar': 128 }, { 'spell-default': 64 }, { 'slash-128-scimitar': 128 }] });
-        this.mobMap.set('Lizard-Topaz', { sheets: [ { 'walk-flail': 64 }] });
+        this.mobMap.set('Lizard-Topaz', { sheets: [{ 'walk-flail': 64 }, { 'hurt-flail': 64 }] });
 
         this.jigs.mobArray.forEach(entity => {
             const monster = this.mobMap.get(entity[5]);
@@ -101,8 +123,8 @@ export default class Load {
         });
 
         this.jigs.switchesArray.forEach(switchItem => {
-            this.mainScene.load.spritesheet('switch_' + switchItem.entity_id, './assets/images/animations/' + switchItem.field_file_value + '.png',
-                { frameWidth: parseInt(switchItem.field_framewidth_value), frameHeight: parseInt(switchItem.field_frameheight_value) });
+            this.mainScene.load.spritesheet('switch_' + switchItem[0], './assets/images/animations/' + switchItem[3] + '.png',
+                { frameWidth: parseInt(switchItem[4]), frameHeight: parseInt(switchItem[5]) });
         });
 
         this.jigs.firesArray.forEach(fireItem => {
@@ -138,16 +160,16 @@ console.log('loading complete');
             const Layer = new Layers(this.mainScene);
             Layer.loadLayers();
 
-            createCharacterAnims(this.mainScene.anims, 'player');
+            createCharacterAnims(this.mainScene.anims, 'player', null);
 
-            if (this.jigs.npcArray) {
+             if (this.jigs.npcArray) {
                 this.jigs.npcArray.forEach(Npc => {
-                    createCharacterAnims(this.mainScene.anims, 'npc' + Npc[3]);
+                    createCharacterAnims(this.mainScene.anims, 'npc', Npc[3]);
                 });
             }
              if (this.jigs.mobArray) {
                 this.jigs.mobArray.forEach(mob => {
-                    createCharacterAnims(this.mainScene.anims, mob[5]);
+                    createCharacterAnims(this.mainScene.anims, mob[5],null);
                 });
             }
             if (this.jigs.slimeArray) {
@@ -156,13 +178,19 @@ console.log('loading complete');
                 });
             }
 
+            if (this.jigs.bossArray) {
+                this.jigs.bossArray.forEach(boss => {
+                    createBossAnims(this.mainScene.anims, boss);
+                });
+            }
+
             if (this.jigs.switchesArray) {
                 this.jigs.switchesArray.forEach(switches => {
                     createSwitchesAnims(this.mainScene.anims,
-                        'switch_' + switches.entity_id,
-                        'switchAnim_' + switches.entity_id,
-                        switches.field_switch_type_value,
-                        switches.field_repeatable_value
+                        'switch_' + switches[0],
+                        'switchAnim_' + switches[0],
+                        switches[7],
+                        switches[8]
                     );
                 });
             }

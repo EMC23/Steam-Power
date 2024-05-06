@@ -36,13 +36,14 @@ export default class NPCs {
         this.NpcContainerArray[i].add(this.SceneNpcArray[i]);
         this.NpcContainerArray[i].add(this.SceneNpcNameArray[i]);
         this.NpcContainerArray[i].setDepth(5);
-        this.SceneNpcArray[i].anims.play('walkDown_npc' + this.jigs.npcArray[i][3]);
+        //this.SceneNpcArray[i].anims.play('npc' + this.jigs.npcArray[i][3] + '-stop-default');
         self.npcGroup.add(this.NpcContainerArray[i], true);
         console.log("add container " + this.jigs.npcArray[i][0]);
         i++;
       }
     }
   }
+
   onNPCDown(npc, self) {
     if (npc[5] == 1) {
       axios
